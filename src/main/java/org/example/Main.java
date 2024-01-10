@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -78,9 +79,8 @@ public class Main {
         // Ordena los nombres alfabéticamente y almacena los resultados en una nueva lista.
 
 
-
-
-        // 1. Map y FlatMap en Streams:
+        System.out.println("---------------------------------------");
+        // Map y FlatMap en Streams:
         List<String> words = Arrays.asList("Java", "Functional", "Programming");
 
         // Map: Convertir cada palabra a su longitud
@@ -88,16 +88,16 @@ public class Main {
                 .map(String::length)
                 .collect(Collectors.toList());
         System.out.println("Word Lengths: " + wordLengths);
+        System.out.println("---------------------------------------");
+
 
         // FlatMap: Convertir cada palabra a sus caracteres y obtener una lista plana
         List<Character> flatMappedChars = words.stream()
                 .flatMap(word -> word.chars().mapToObj(c -> (char) c))
                 .collect(Collectors.toList());
         System.out.println("Flat Mapped Characters: " + flatMappedChars);
+        System.out.println("---------------------------------------");
 
-
-        // 2. Operaciones de Stream Intermedias:
-        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
         // Skip y Limit: Saltar los primeros 3 y limitar a 5 elementos
         List<Integer> skippedAndLimited = numbers.stream()
@@ -105,33 +105,18 @@ public class Main {
                 .limit(5)
                 .collect(Collectors.toList());
         System.out.println("Skipped and Limited: " + skippedAndLimited);
+        System.out.println("---------------------------------------");
 
-        // Distinct: Obtener elementos únicos
-        List<Integer> distinctNumbers = numbers.stream()
-                .distinct()
-                .collect(Collectors.toList());
-        System.out.println("Distinct Numbers: " + distinctNumbers);
 
         // Sorted: Ordenar los números
         List<Integer> sortedNumbers = numbers.stream()
                 .sorted()
                 .collect(Collectors.toList());
         System.out.println("Sorted Numbers: " + sortedNumbers);
+        System.out.println("---------------------------------------");
 
 
-        // 3. Optional:
-        Optional<String> maybeName = Optional.ofNullable(getNameFromDatabase());
-
-        // Verificar si el nombre está presente y obtenerlo
-        String result = maybeName.orElse("Nombre Predeterminado");
-        System.out.println("Name: " + result);
-
-        // Operaciones encadenadas con map
-        int nameLength = maybeName.map(String::length).orElse(0);
-        System.out.println("Name Length: " + nameLength);
-
-
-        // 4. Collectors Avanzados:
+        // Collectors:
         List<Person> people = Arrays.asList(
                 new Person("John", 30),
                 new Person("Alice", 25),
@@ -142,11 +127,15 @@ public class Main {
         Map<Integer, List<Person>> groupedByAge = people.stream()
                 .collect(Collectors.groupingBy(Person::getAge));
         System.out.println("Grouped by Age: " + groupedByAge);
+        System.out.println("---------------------------------------");
+
 
         // PartitioningBy: Separar personas en menores y mayores de 30
         Map<Boolean, List<Person>> partitioned = people.stream()
                 .collect(Collectors.partitioningBy(person -> person.getAge() > 30));
         System.out.println("Partitioned by Age: " + partitioned);
+        System.out.println("---------------------------------------");
+
 
         // Joining: Obtener una cadena con los nombres concatenados
         String allNames = people.stream()
@@ -156,7 +145,5 @@ public class Main {
 
 
     }
-
-
 
 }
